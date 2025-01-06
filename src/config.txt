@@ -1,0 +1,62 @@
+w###CONFIG FILE###
+
+#This file can be used to tweak the values of the .exe. Generally you can leave these alone if you don't want
+#to mess with them. However, if you do decide to change them, please change only the part after the '=' with
+#no spaces, and nothing else. For example: "number=2" if you want to change it to 3, it should then look like
+#"number=3". "number = 3", or "NUMBER=3" or "number=    3" or "number =3" will not work. 
+#This file needs to be next to the .exe file for it to work.
+
+
+#####################################MOST IMPORTANT SETTING###########################################################
+#THRESHOLD
+#The threshold basically how "close" the images have to be before they match. The lower the number, the closer they
+#are. 0 means they are the exact same, but this is unreachable, because there is no way to create 2 images that 
+#are exactly the same. The lower the number, the closer they are. 
+
+#Please note that these numbers are what I found to work best on my system, but maybe yours will need a little 
+#tweaking. 
+#.3 basically has no false negatives, but has trouble differentiating between 2 pokemon that have color differences.
+#.2 I have not seen fail, might every once in a while, and does better at differentiating shinies. 
+#.15 is enough for the sprites from the pokemon brick bronze website to work
+#.13125 seems to work mostly fine, but has false negatives
+#.134375 has some false positives
+#.133 is between thosee but also has false positives
+#.132125 also has false positives, but not very frequently. However, this is finicky when we get to this level, as 
+#half the time 2 images that are the exact same will/won't be flagged positive/negative due to random
+#changes in pixels and whatnot.
+#The default should be .15
+
+#if it is saying you found pokemon you did not, number should go down, if it is saying that Pokemon that are a match
+aren't, then this number should go up. 
+
+threshold=.3
+###########################################Other Settings########################################################
+
+#Image folder location. Standard its all in once folder, but if you want to move it, please put where you are
+#putting it here. 
+folder_path=./image_folder
+
+#target_coordinates are basically given as where the mouse is going to put their mouse. If the mouse does not 
+#click on the "run" button by missing it, these need to be tweaked. Otherwise you can leave these alone
+target_coordinates_x=1200
+target_coordinates_y=950
+
+
+#this scales up the image as big as the program itself.
+img_scale_percent=400
+
+#hold time is how long the keys are pressed in seconds. Standard is 2, so 2 seconds = 2 seconds of pressing "w"
+hold_time=2
+#these just means what 2 keys are being pressed at the time
+key_1=w
+key_2=s
+
+#Countdown timer just dictates how much time you have before the program starts. 
+countdown_time=5
+
+#DEBUG HERE
+
+#This gives more information, like printing a picture with the programs best guess of where the Pokemon is in a
+#box in red. if you want to set this to True, make sure the "True" is capitalized. Same with False, please make 
+#sure that False is capitalized
+debug=False
