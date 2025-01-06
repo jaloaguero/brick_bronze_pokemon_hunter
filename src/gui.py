@@ -4,6 +4,8 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import time
 
+import sys
+
 from PIL import Image, ImageTk
 
 from loop_logic import start
@@ -35,7 +37,7 @@ def setup_gui(config):
     global root, countdown_label, vcmd
     root = tk.Tk()
     root.title("Pokemon Brick Bronze Auto Hunter")
-    root.geometry("650x800")  # Set the window size to 600x400
+    root.geometry("650x850")  # Set the window size to 600x400
     root.iconbitmap("icons/program_icon.ico")
     root.resizable(False, False)
 
@@ -144,23 +146,23 @@ def setup_gui(config):
 ################### BREAKS BECAUSE OF THIS JUST THROW IT AWAY ITS JUST FOR DECORATION ###################
 #########################################################################################################
                                                                                                         #
-    def animate_gif(label, frames, delay, idx=0):                                                       #                           #
+    def animate_gif(label, frames, delay, idx=0):                                                       #
         frame = frames[idx]                                                                             #
         gif_img = ImageTk.PhotoImage(frame)                                                             #
         label.config(image=gif_img)                                                                     #
         label.image = gif_img                                                                           #
         root.after(delay, animate_gif, label, frames, delay, (idx + 1) % len(frames))                   #
                                                                                                         #
-    def load_gif():                                                                                     #                                                      #
+    def load_gif():                                                                                     #
         gif = Image.open(config.img_dir)                                                                #
         frames = [gif.copy().convert("RGBA") for frame in range(gif.n_frames) if not gif.seek(frame)]   #
         return frames, int(1000 / gif.info["duration"])                                                 #
-    
-    gif_name_label = ttk.Label(basic_tab, text="LOOKING FOR")
-    gif_name_label.pack(padx=padx_input, pady=pady_input, anchor="se")
+                                                                                                        #
+    gif_name_label = ttk.Label(basic_tab, text="LOOKING FOR")                                           #
+    gif_name_label.pack(padx=padx_input, pady=pady_input, anchor="se")                                  #
                                                                                                         #
     gif_label = ttk.Label(basic_tab)                                                                    #
-    gif_label.pack(padx=padx_input, pady=pady_input, anchor="se")                                                                             #
+    gif_label.pack(padx=padx_input, pady=pady_input, anchor="se")                                       #
                                                                                                         #
     try:                                                                                                #
         gif_frames, gif_delay = load_gif()                                                              #
@@ -187,9 +189,12 @@ def setup_gui(config):
 
     #should be running on it's own thread
     def on_countdown_complete():
+
         #Calls START and loops forever
         label_start = ttk.Label(basic_tab, text="RUNNING", style="start.TLabel")
         label_start.pack(padx=10, pady=10)
+
+        
         while True:
             start(config)
 
@@ -237,11 +242,16 @@ def startup_text():
         dividing in half until you are not. If you are having false negatives (missing a match),
         double the threshold until you get a match. 
 
+        If you want new defaults, edit on config.txt. Please be careful and keep the format I put.
+
+        Also, please be careful doing this, as you can get kicked for being a bot. I know because
+        it happened to me once already :(
+
         If you are doing shiny hunting, 0.3 seems to work just fine for most things, however this 
-        program has only caught shinys that are dramatically different than their non-shiny 
+        program has only caught shinys that are different color shade than their non-shiny 
         counterparts.It sometimes struggles with shinys like Pidgey which variation is very slight. 
         Please test before usage as while this works well on my machine, I cannot vouch for yours.
-        
+
         I tried to make it dummy proof but if you manage to break it, tell me how!
 
         https://github.com/jaloaguero
