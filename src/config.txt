@@ -23,7 +23,7 @@
 # Please note that these numbers are what I found to work best on my system, but maybe yours will need a little 
 # tweaking. 
 
-threshold=.3
+threshold=.15
 
 ################################################## OTHER SETTINGS #################################################
 # These are the settings that you can access in the GUI menu. Change if you are sick of putting in the same thing

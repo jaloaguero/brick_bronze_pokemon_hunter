@@ -25,7 +25,7 @@ def validate_number_input(P):
 def countdown(timer, callback):
     """Countdown function that updates the timer label."""
     for t in range(timer, -1, -1):
-        countdown_label.config(text=f"Time left: {t} seconds")
+        countdown_label.config(text=f"Starting in: {t} seconds", font="Courier 25 bold", foreground="red")
         root.update()
         time.sleep(1)
     
@@ -44,7 +44,7 @@ def setup_gui(config):
     s = ttk.Style()
     COLOR_YELLOW = "#FCC737"
     COLOR_PURPLE = "#7E1891"
-    BACKGROUND_COLOR = "#b8c5ff"
+    BACKGROUND_COLOR = "#E6E6FA"
     FOREGROUND_COLOR = "#473245"
 
     s.theme_create("yummy", parent="alt", settings={
@@ -59,9 +59,9 @@ def setup_gui(config):
 
 
     s.configure('TFrame', background=BACKGROUND_COLOR)
-    s.configure('start.TButton', foreground=COLOR_YELLOW, background="#352645", font=('Impact', 20), padding=10)
-    s.configure('TLabel', foreground=FOREGROUND_COLOR, background=BACKGROUND_COLOR, font=('Helvetica', 10))
-    s.configure('TEntry', background=BACKGROUND_COLOR, font=('Helvetica', 10))
+    s.configure('start.TButton', foreground=COLOR_YELLOW, background="#352645", font=('Helvetica 20 bold'), padding=10)
+    s.configure('TLabel', foreground=FOREGROUND_COLOR, background=BACKGROUND_COLOR, font=('Courier 12 bold'))
+    s.configure('TEntry', background=BACKGROUND_COLOR, font=('Courier 20 bold'))
 
     
     vcmd = root.register(validate_number_input)
@@ -81,31 +81,36 @@ def setup_gui(config):
     
 # Label to display output
 
-    label_blurb = ttk.Label(basic_tab, text="I HOPE TO MAKE A LOGO SOMEDAY THAT GOES HERE LOL")
+    #THIS IS THE LOGO HERE
+    img = ImageTk.PhotoImage(Image.open("icons/program_logo.png"))
+    label_logo = ttk.Label(basic_tab, image=img)
+    label_logo.pack(padx=padx_input, pady=pady_input)
+
+    label_blurb = ttk.Label(basic_tab, text="Welcome! Please go to the info tab for instructions!", font="Courier 13 bold")
     label_blurb.pack(padx=padx_input, pady=pady_input)
-    #label
-    label_countdown_time = ttk.Label(basic_tab, text="Countdown Before Start (Seconds):")
+
+    label_countdown_time = ttk.Label(basic_tab, text="Start Countdown (Seconds):")
     label_countdown_time.pack(padx=padx_input, pady=pady_input, anchor="nw")
     #text box
     entry_countdown_time = ttk.Entry(basic_tab, validate="key", validatecommand=(vcmd, "%P"))
     entry_countdown_time.pack(padx=padx_input, pady=pady_input, anchor="nw")
     entry_countdown_time.insert(0, config.countdown_time)  # Pre-fill with a predetermined number
 
-    label_key1 = ttk.Label(basic_tab, text="Key 1:")
+    label_key1 = ttk.Label(basic_tab, text="Key 1 (The first key that we use to move):")
     label_key1.pack(padx=padx_input, pady=pady_input, anchor="nw")
 
     entry_key1 = ttk.Entry(basic_tab, validate="key")
     entry_key1.pack(padx=padx_input, pady=pady_input, anchor="nw")
     entry_key1.insert(0, config.key_1)  # Pre-fill with a predetermined number
 
-    label_key2 = ttk.Label(basic_tab, text="Key 2:")
+    label_key2 = ttk.Label(basic_tab, text="Key 2: (The second key that we use to move):")
     label_key2.pack(padx=padx_input, pady=pady_input, anchor="nw")
 
     entry_key2 = ttk.Entry(basic_tab, validate="key")
     entry_key2.pack(padx=padx_input, pady=pady_input, anchor="nw")
     entry_key2.insert(0, config.key_2)  # Pre-fill with a predetermined number
 
-    label_hold_time = ttk.Label(basic_tab, text="Key Hold Time (Seconds):")
+    label_hold_time = ttk.Label(basic_tab, text="Hold Time (How long in seconds we hold each key above):")
     label_hold_time.pack(padx=padx_input, pady=pady_input, anchor="nw")
     
 
@@ -123,22 +128,28 @@ def setup_gui(config):
     advanced_tab = ttk.Frame(notebook)
     notebook.add(advanced_tab, text="Advanced")
 
+    label_adv_blurb = ttk.Label(advanced_tab, text="This is for advanced users. Use at your own risk!", font="Helvetica 15 bold")
+    label_adv_blurb.pack(padx=padx_input, pady=pady_input)
+
+
     # Example advanced feature: An extra entry box
     advanced_label_threshold = ttk.Label(advanced_tab, text="Threshold:")
     advanced_label_threshold.pack(padx=padx_input, pady=pady_input)
     advanced_entry_threshold = ttk.Entry(advanced_tab, validate="key", validatecommand=(vcmd, "%P"))
     advanced_entry_threshold.pack(padx=padx_input, pady=pady_input)
     advanced_entry_threshold.insert(0, float(config.threshold))  # Pre-fill with a predetermined number
+    
 
+    debug_var = tk.BooleanVar()
     #this doesn't work so its just there for show lol i will maybe get some config going later
-    debug_button = ttk.Checkbutton(advanced_tab, variable='d', text='Debug', onvalue=True, offvalue=False)
+    debug_button = ttk.Checkbutton(advanced_tab, variable=debug_var, text='Debug', onvalue=True, offvalue=False)
     debug_button.pack(padx=padx_input, pady=pady_input)
 
 
     info_tab = ttk.Frame(notebook)
     notebook.add(info_tab, text="Info")
 
-    label_info_text = ttk.Label(info_tab, text=startup_text())
+    label_info_text = ttk.Label(info_tab, text=startup_text(), font="Helvetica 10 bold")
     label_info_text.pack(padx=10, pady=10)
 
 #########################################################################################################
@@ -158,11 +169,11 @@ def setup_gui(config):
         frames = [gif.copy().convert("RGBA") for frame in range(gif.n_frames) if not gif.seek(frame)]   #
         return frames, int(1000 / gif.info["duration"])                                                 #
                                                                                                         #
-    gif_name_label = ttk.Label(basic_tab, text="LOOKING FOR")                                           #
-    gif_name_label.pack(padx=padx_input, pady=pady_input, anchor="se")                                  #
+    gif_name_label = ttk.Label(basic_tab, text="HUNTING FOR", font='Courier 15 bold')                                           #
+    gif_name_label.pack(padx=padx_input, pady=pady_input, anchor="nw")                                  #
                                                                                                         #
     gif_label = ttk.Label(basic_tab)                                                                    #
-    gif_label.pack(padx=padx_input, pady=pady_input, anchor="se")                                       #
+    gif_label.pack(padx=padx_input * 2, pady=pady_input, anchor="nw")                                       #
                                                                                                         #
     try:                                                                                                #
         gif_frames, gif_delay = load_gif()                                                              #
@@ -174,13 +185,21 @@ def setup_gui(config):
     #Gets ball rolling, does try catch on countodnw, if fails, its because of a bad output so it stops and sends message box
     def start_countdown():
         try:
+            #stops timer button from being spammed and breaking stuff
+            start_button.config(state="disabled")
 
+            #sets 
             config.countdown_timer = int(entry_countdown_time.get()) 
             config.key_1 = entry_key1.get()
             config.key_2 = entry_key2.get()
             config.hold_time = int(entry_hold_time.get())
 
             config.threshold = float(advanced_entry_threshold.get())
+
+            config.debug = debug_var.get()
+
+            print("THRES: ", debug_var.get())
+            print("DEBUG: ", config.debug)
 
 
             countdown(config.countdown_timer, on_countdown_complete)
@@ -191,7 +210,7 @@ def setup_gui(config):
     def on_countdown_complete():
 
         #Calls START and loops forever
-        label_start = ttk.Label(basic_tab, text="RUNNING", style="start.TLabel")
+        label_start = ttk.Label(basic_tab, text="RUNNING", font="Courier 25 bold", foreground="red")
         label_start.pack(padx=10, pady=10)
 
         

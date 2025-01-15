@@ -1,6 +1,6 @@
 #this just handles everything to do with extracting info from config file, and reformatting info
-
 import os
+import sys
 from auto_move import get_screen_size
 
 def get_info_from_config(file_path, target_keyword):

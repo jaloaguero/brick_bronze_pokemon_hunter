@@ -4,7 +4,7 @@ from image_recognition import compare_images, get_text_from_screenshot
 from auto_move import move_mouse, press_keys, idle_game
 
 def start(config):
-
+        print(config.debug)
         print("Pressing key: ",config.key_1)
         press_keys(config.key_1,config.hold_time)
         print("Pressing key: ", config.key_2)
