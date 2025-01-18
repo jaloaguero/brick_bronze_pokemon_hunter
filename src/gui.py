@@ -4,8 +4,6 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import time
 
-import sys
-
 from PIL import Image, ImageTk
 
 from loop_logic import start
@@ -198,7 +196,7 @@ def setup_gui(config):
 
             config.debug = debug_var.get()
 
-            print("THRES: ", debug_var.get())
+            print("THRES: ", config.threshold)
             print("DEBUG: ", config.debug)
 
 
