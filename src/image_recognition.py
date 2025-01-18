@@ -162,7 +162,7 @@ def preprocess_image(image):
 
     return processed_image
 
-def get_text_from_screenshot(coords):
+def get_text_from_screenshot(coords, debug):
 
     pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
     x1 = coords[0]
@@ -172,13 +172,12 @@ def get_text_from_screenshot(coords):
     
     cropRect = (x1,y1,x2,y2) 
     screenshot = ImageGrab.grab().convert('L').crop(cropRect)
-
-    #screenshot.show()
-
     values = pytesseract.image_to_string(screenshot)
     
-    
-    #print(values)
+    if debug == True:
+        print("showing text seeing if we are in battle...")
+        screenshot.show()
+        print(values)
 
 
     text = str(values[:values.find("/n")])

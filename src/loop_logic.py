@@ -11,7 +11,7 @@ def start(config):
         press_keys(config.key_2,config.hold_time)
 
         print("Chekcing if we are in battle...")
-        in_battle = get_text_from_screenshot(config.text_coords)
+        in_battle = get_text_from_screenshot(config.text_coords, config.debug)
 
         if in_battle == True:
 
