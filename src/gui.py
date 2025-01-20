@@ -167,11 +167,11 @@ def setup_gui(config):
         frames = [gif.copy().convert("RGBA") for frame in range(gif.n_frames) if not gif.seek(frame)]   #
         return frames, int(1000 / gif.info["duration"])                                                 #
                                                                                                         #
-    gif_name_label = ttk.Label(basic_tab, text="HUNTING FOR", font='Courier 15 bold')                                           #
+    gif_name_label = ttk.Label(basic_tab, text="HUNTING FOR", font='Courier 15 bold')                   #
     gif_name_label.pack(padx=padx_input, pady=pady_input, anchor="nw")                                  #
                                                                                                         #
     gif_label = ttk.Label(basic_tab)                                                                    #
-    gif_label.pack(padx=padx_input * 2, pady=pady_input, anchor="nw")                                       #
+    gif_label.pack(padx=padx_input * 2, pady=pady_input, anchor="nw")                                   #
                                                                                                         #
     try:                                                                                                #
         gif_frames, gif_delay = load_gif()                                                              #

@@ -16,12 +16,12 @@ class ConfigManager:
             self.debug = bool(get_info_from_config('config.txt', "debug"))
             self.threshold = float(get_info_from_config('config.txt', "threshold"))
             self.img_dir = get_file_name_w_directory(get_info_from_config('config.txt', "folder_path"))
+            self.precheck_threshold = 0.5
         except Exception as e:
             print("Error: ", e)
             print("Please check your spelling dude, you probably typed something wrong in on the config file.")
             input()
             sys.exit()
-# Function to create and return the ConfigManager instance
 def init_config():
     print("Creating configManager...")
     return ConfigManager()

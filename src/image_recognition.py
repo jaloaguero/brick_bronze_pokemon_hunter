@@ -6,7 +6,7 @@ from io import BytesIO
 import imghdr
 import pytesseract
 
-def compare_images(img_dir, threshold, scale_percent, debug):
+def compare_images(img_dir, precheck_threshold, threshold, scale_percent, debug):
 
     frame_num = get_frame_num(img_dir)
 
@@ -30,20 +30,34 @@ def compare_images(img_dir, threshold, scale_percent, debug):
 
             flag = False
 
+            #gives precheck of a high threshold saves time so in case the pokemon is clearly not the same, we can just move on
+            #I haven't calibrated this yet but im hoping to build a cool thing.
+            if min_val >= precheck_threshold:
+                print("Did not pass precheck.")
+                print("min val: ", min_val, " Precheck Val: ", precheck_threshold)
+                if debug == True:
+                    print_image(min_loc, tcols, trows, curr_screen)
+                return False
+
 
             if min_val <= threshold:
                 flag = True
+
+                #sends out screenshot of what the computer found...
                 if debug == True:
-                    print("DEBUG: Printing where computer found the image...")
-                    top_left = min_loc
-                    bottom_right = (top_left[0] + tcols, top_left[1] + trows)
-                    cv2.rectangle(curr_screen, top_left, bottom_right, (0, 0, 255), 2)
-                    cv2.imshow('output', curr_screen)
-                    cv2.waitKey(0)
+                    print_image(min_loc, tcols, trows, curr_screen)
 
                 return flag
 
     return flag
+
+def print_image(min_loc, tcols, trows, curr_screen):
+    print("DEBUG: Printing where computer found the image...")
+    top_left = min_loc
+    bottom_right = (top_left[0] + tcols, top_left[1] + trows)
+    cv2.rectangle(curr_screen, top_left, bottom_right, (0, 0, 255), 2)
+    cv2.imshow('output', curr_screen)
+    cv2.waitKey(0)
 
 def get_frame_num(image_path):
     file_type = imghdr.what(image_path)
@@ -175,9 +189,13 @@ def get_text_from_screenshot(coords, debug):
     values = pytesseract.image_to_string(screenshot)
     
     if debug == True:
-        print("showing text seeing if we are in battle...")
-        screenshot.show()
+        print("DEBUG: showing text seeing if we are in battle...")
+        #screenshot.show()
         print(values)
+        img = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
+
+        cv2.imshow("Screenshot", img)
+        cv2.waitKey(0)
 
 
     text = str(values[:values.find("/n")])
