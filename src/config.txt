@@ -20,10 +20,13 @@
 # The threshold basically how "close" the images have to be before they match. The lower the number, the closer 
 # they are. 0 means they are the exact same, but this is unreachable, because there is no way to create 2 images 
 # that are exactly the same. 
+# The precheck_threshold is for not wasting time on something that is clearly not a match.
+# However, the precheck needs to be a high enough number that it doesn't give a false negative.
 # Please note that these numbers are what I found to work best on my system, but maybe yours will need a little 
 # tweaking. 
 
 threshold=.15
+precheck_threshold=.5
 
 ################################################## OTHER SETTINGS #################################################
 # These are the settings that you can access in the GUI menu. Change if you are sick of putting in the same thing

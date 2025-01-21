@@ -131,6 +131,12 @@ def setup_gui(config):
 
 
     # Example advanced feature: An extra entry box
+    advanced_label_precheck_threshold = ttk.Label(advanced_tab, text="Precheck Threshold:")
+    advanced_label_precheck_threshold.pack(padx=padx_input, pady=pady_input)
+    advanced_entry_precheck_threshold = ttk.Entry(advanced_tab, validate="key", validatecommand=(vcmd, "%P"))
+    advanced_entry_precheck_threshold.pack(padx=padx_input, pady=pady_input)
+    advanced_entry_precheck_threshold.insert(0, float(config.precheck_threshold))
+
     advanced_label_threshold = ttk.Label(advanced_tab, text="Threshold:")
     advanced_label_threshold.pack(padx=padx_input, pady=pady_input)
     advanced_entry_threshold = ttk.Entry(advanced_tab, validate="key", validatecommand=(vcmd, "%P"))
