@@ -4,6 +4,9 @@ Pokemon Brick Bronze Auto Hunter is an automated tool for hunting Pokemon in the
 
 Yes this program is good enough to do shiny hunting. 
 
+## Screenshot:
+![gui_show](https://github.com/user-attachments/assets/5a9bfafc-0f45-448e-bd02-4ced411d9f06)
+
 ## Quick Start Instructions: 
 1. Please find the Pokemon you are looking for from the following websites:
 
